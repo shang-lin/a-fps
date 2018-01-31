@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+      <meta http-equiv="Cache-Control" content="no-cache">
+      <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+      <script src="https://unpkg.com/aframe-animation-component@4.0.0-beta8/dist/aframe-animation-component.min.js"></script>
+      <script src="assets/components/cursor-listener.js?v=0.12"></script>
+      <script src="assets/components/raycaster-autorefresh.js"></script>
+      <script src="assets/components/game-manager.js?v=0.19"></script>
+            
+  </head>
+
+  <body>
+    <a-scene game-manager="numberEnemies: 10" raycaster-autorefresh>
+            
+      <a-assets>
+        <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" crossorigin="anonymous">
+        <a-asset-item id="ghost" src="assets/models/Ghost.gltf"></a-asset-item>
+      </a-assets>
+      <a-sky src="#skyTexture" theta-length="90" radius="30"></a-sky>
+      <a-camera>
+        <!-- <a-cursor downEvents="triggerdown" upEvents="triggerup"></a-cursor> -->
+        <a-entity cursor="downEvents: triggerdown; upEvents: triggerUp" 
+                  geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.05"
+                  material="color: blue; shader: flat"
+                  position="0 0 -1">
+        </a-entity>
+        </a-camera>
+        <a-entity id="ground" geometry="primitive: cylinder; radius: 30; height: 0.1" 
+                              position="0 0 0" 
+                              material="shader: flat; color: #424949">
+        </a-entity>
+        <!-- 
+        <a-entity gltf-model="#ghost" cursor-listener position="0 1.6 -10"></a-entity>
+        <a-entity gltf-model="#ghost" cursor-listener position="3 1.6 -10"></a-entity>
+        <a-entity gltf-model="#ghost" cursor-listener position="5 1.6 -10"></a-entity>
+        -->
+    </a-scene>
+  </body>
+</html>
