@@ -1,9 +1,5 @@
-//var WEAPONS = require('./weapon');
+var WEAPONS = require('./weapon');
 
-/**
- * Spawn bullets on an event.
- * Default schema optimized for Vive controllers.
- */
 AFRAME.registerComponent('shoot', {
   schema: {
     direction: {type: 'vec3', default: {x: 0, y: -2, z: -1}},  // Event to fire bullet.
@@ -70,7 +66,7 @@ AFRAME.registerComponent('shoot', {
 
       if (this.coolingDown) { return; }
 
-      ABLAST.currentScore.shoots++;
+      //ABLAST.currentScore.shoots++;
 
       // Get firing entity's transformations.
       el.object3D.updateMatrixWorld();
@@ -97,8 +93,17 @@ AFRAME.registerComponent('shoot', {
         position: position.clone(),
         owner: 'player'
       });
-      bulletEntity.setAttribute('visible', true);
+	  
+	  //HERE
+	  setTimeout(function()
+		{
+			bulletEntity.body.applyImpulse(new CANNON.Vec3().copy(direction).scale(1), new CANNON.Vec3().copy(position));
+		},0);
+	  
+	  
+	  bulletEntity.setAttribute('visible', true);
       bulletEntity.setAttribute('position', position);
+	  
       bulletEntity.play();
 
       // Communicate the shoot.
