@@ -25,18 +25,16 @@ AFRAME.registerComponent('weapon', {
   },
 
   updateWeapon: function () {
-    console.log('weapon.updateWeapon');
     console.log(this.controllerModel);
     if (this.controllerModel === 'oculus-touch-controller') {
       this.model.applyMatrix(new THREE.Matrix4().makeRotationAxis(new THREE.Vector3(1, 0, 0), 0.8));
       this.el.setAttribute('shoot', {direction: '0 -0.3 -1'});
-    } else if (this.controllerModel === 'daydream-controls' || this.controllerModel === 'gearvr-controls') {
+    } else if (this.controllerModel === 'daydream-controls') {
       document.getElementById('rightHandPivot').setAttribute('position', '-0.2 0 -0.5');
       this.el.setAttribute('shoot', {on: 'trackpaddown'});
     }
   },
   init: function () {
-    console.log('weapon.init');
     var el = this.el;
     var self = this;
 
@@ -45,21 +43,20 @@ AFRAME.registerComponent('weapon', {
     this.controllerModel = null;
     this.weapon = WEAPONS[ this.data.type ];
 
-    el.setAttribute('json-model', {src: 'assets/models/gun.json'});
-    console.log('weapon model: ' + el.getAttribute('json-model')['src']);
+    el.setAttribute('json-model', {src: this.weapon.model.url});
 
-    /* el.setAttribute('sound', {
+    el.setAttribute('sound', {
       src: this.weapon.shootSound,
       on: 'shoot',
       volume: 0.5,
       poolSize: 10
-    }); */
+    });
 
     this.fires = [];
     this.trigger = null;
 
     el.addEventListener('controllerconnected', function (evt) {
-      console.log('controller connected');
+      console.log(evt);
       self.controllerModel = evt.detail.name;
       if (self.model == null) {
         self.isGamepadConnected = true;
@@ -69,7 +66,6 @@ AFRAME.registerComponent('weapon', {
     });
 
     el.addEventListener('model-loaded', function (evt) {
-      console.log('model loaded');
       this.model = evt.detail.model;
       var modelWithPivot = new THREE.Group();
       modelWithPivot.add(this.model);
