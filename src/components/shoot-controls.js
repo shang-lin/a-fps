@@ -61,10 +61,10 @@ AFRAME.registerComponent('shoot-controls', {
     el.setAttribute('vive-controls', {hand: data.hand, model: false});
     el.setAttribute('oculus-touch-controls', {hand: data.hand, model: false});
     el.setAttribute('windows-motion-controls', {hand: data.hand, model: false});
-    el.setAttribute('gearvr-controls', {hand: data.hand, model: false});
+    // el.setAttribute('gearvr-controls', {hand: data.hand, model: false});
     if (data.hand === 'right') {
       el.setAttribute('daydream-controls', {hand: data.hand, model: false});
-      // el.setAttribute('gearvr-controls', {hand: data.hand, model: false});
+      el.setAttribute('gearvr-controls', {hand: data.hand, model: false});
     }
   }
 });
