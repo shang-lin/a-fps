@@ -57,7 +57,7 @@ ABLAST.registerBullet(
 		el.setAttribute('scale', {x: 0.2, y: 0.2, z: 0.2});
 		el.setAttribute('dynamic-body','mass: 0.1, shape:sphere');
 		el.addEventListener('collide', function (e) {
-			//console.log('Bullet hit body #' + e.detail.body.el['id']);
+			console.log('Bullet hit body #' + e.detail.body.el['id']);
 			  
 			e.detail.target.el;  // Original entity (playerEl).
 			e.detail.body.el;    // Other entity, which playerEl touched.
@@ -65,7 +65,7 @@ ABLAST.registerBullet(
 			e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
 			  
 			setTimeout(function(){el.components.bullet.hitObject(null, null);}, 0);
-			console.log('reset bullet');
+			//console.log('reset bullet');
 		  
 		});
       this.trail = null;
@@ -396,8 +396,10 @@ AFRAME.registerComponent('enemy', {
     init: function() {
         var el = this.el;
         el.addEventListener('collide', function(e) {
-            console.log("I'm hit!");
-            el.parentNode.removeChild(el);
+            if (e.detail.body.el.id !== "ground") {
+                console.log("I'm hit by", e.detail.body.el.id);
+                el.parentNode.removeChild(el);
+            }
         });
     }
 
@@ -853,6 +855,10 @@ AFRAME.registerComponent('weapon', {
     } else if (this.controllerModel === 'daydream-controls') {
       document.getElementById('rightHandPivot').setAttribute('position', '-0.2 0 -0.5');
       this.el.setAttribute('shoot', {on: 'trackpaddown'});
+    }
+    else {
+      document.getElementById('rightHandPivot').setAttribute('position', '-0.2 0 -0.5');
+      this.el.setAttribute('shoot', {on: 'click'});
     }
   },
   init: function () {
