@@ -32,7 +32,7 @@ ABLAST.registerBullet(
 		el.setAttribute('scale', {x: 0.2, y: 0.2, z: 0.2});
 		el.setAttribute('dynamic-body','mass: 0.1, shape:sphere');
 		el.addEventListener('collide', function (e) {
-			//console.log('Bullet hit body #' + e.detail.body.el['id']);
+			console.log('Bullet hit body #' + e.detail.body.el['id']);
 			  
 			e.detail.target.el;  // Original entity (playerEl).
 			e.detail.body.el;    // Other entity, which playerEl touched.
@@ -40,7 +40,7 @@ ABLAST.registerBullet(
 			e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
 			  
 			setTimeout(function(){el.components.bullet.hitObject(null, null);}, 0);
-			console.log('reset bullet');
+			//console.log('reset bullet');
 		  
 		});
       this.trail = null;
