@@ -136,7 +136,7 @@ ABLAST.registerBullet(
   }
 );
 },{"../systems/bullet.js":14}],3:[function(require,module,exports){
-/* globals AFRAME ABLAST THREE */
+c/* globals AFRAME ABLAST THREE */
 AFRAME.registerComponent('bullet', {
   schema: {
     name: { default: '' },
@@ -393,14 +393,20 @@ AFRAME.registerComponent('collision-helper', {
 
 },{}],5:[function(require,module,exports){
 AFRAME.registerComponent('enemy', {
+    schema: {
+        hp: {type: 'int', default: 3}
+    },
     init: function() {
         var el = this.el;
         el.addEventListener('collide', function(e) {
+            console.log("I'm hit");
             if (e.detail.body.el.id !== "ground") {
                 console.log("I'm hit by", e.detail.body.el.id);
                 el.parentNode.removeChild(el);
             }
+                
         });
+        
     }
 
 });
@@ -852,14 +858,14 @@ AFRAME.registerComponent('weapon', {
     if (this.controllerModel === 'oculus-touch-controller') {
       this.model.applyMatrix(new THREE.Matrix4().makeRotationAxis(new THREE.Vector3(1, 0, 0), 0.8));
       this.el.setAttribute('shoot', {direction: '0 -0.3 -1'});
-    } else if (this.controllerModel === 'daydream-controls') {
+    } else if (this.controllerModel === 'daydream-controls' || this.controllerMOdel === 'gearvr-controls') {
       document.getElementById('rightHandPivot').setAttribute('position', '-0.2 0 -0.5');
       this.el.setAttribute('shoot', {on: 'trackpaddown'});
     }
-    else {
+    /*else {
       document.getElementById('rightHandPivot').setAttribute('position', '-0.2 0 -0.5');
       this.el.setAttribute('shoot', {on: 'click'});
-    }
+    } */
   },
   init: function () {
     var el = this.el;
